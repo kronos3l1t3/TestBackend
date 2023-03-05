@@ -1,0 +1,15 @@
+-r base.txt
+
+# Production things
+# ------------------------------------------------------------------------------
+
+beautifulsoup4==4.11.2
+psycopg2
+gunicorn
+sentry-sdk
+dnspython
+uvicorn
+uvloop
+whitenoise
+httptools
+

@@ -1,0 +1,124 @@
+@startuml 
+class "admin.LogEntry <Administration>" as admin.LogEntry #f4d6f1 {
+    log entry
+    --
+    - id (AutoField)
+    + action_time (DateTimeField)
+    ~ user (ForeignKey)
+    ~ content_type (ForeignKey)
+    + object_id (TextField)
+    + object_repr (CharField)
+    + action_flag (PositiveSmallIntegerField)
+    + change_message (TextField)
+    --
+}
+admin.LogEntry -- auth.User
+admin.LogEntry -- contenttypes.ContentType
+
+
+class "auth.Permission <Authentication and Authorization>" as auth.Permission #e8f4d6 {
+    permission
+    --
+    - id (AutoField)
+    + name (CharField)
+    ~ content_type (ForeignKey)
+    + codename (CharField)
+    --
+}
+auth.Permission -- contenttypes.ContentType
+
+
+class "auth.Group <Authentication and Authorization>" as auth.Group #e8f4d6 {
+    group
+    --
+    - id (AutoField)
+    + name (CharField)
+    # permissions (ManyToManyField)
+    --
+}
+auth.Group *--* auth.Permission
+
+
+class "auth.User <Authentication and Authorization>" as auth.User #e8f4d6 {
+    user
+    --
+    - id (AutoField)
+    + password (CharField)
+    + last_login (DateTimeField)
+    + is_superuser (BooleanField)
+    + username (CharField)
+    + first_name (CharField)
+    + last_name (CharField)
+    + email (EmailField)
+    + is_staff (BooleanField)
+    + is_active (BooleanField)
+    + date_joined (DateTimeField)
+    # groups (ManyToManyField)
+    # user_permissions (ManyToManyField)
+    --
+}
+auth.User *--* auth.Group
+auth.User *--* auth.Permission
+
+
+class "contenttypes.ContentType <Content Types>" as contenttypes.ContentType #d6f4de {
+    content type
+    --
+    - id (AutoField)
+    + app_label (CharField)
+    + model (CharField)
+    --
+}
+
+
+class "sessions.Session <Sessions>" as sessions.Session #f4e1d6 {
+    session
+    --
+    + session_key (CharField)
+    + session_data (TextField)
+    + expire_date (DateTimeField)
+    --
+}
+
+
+class "Mid.TaskList <Mid>" as Mid.TaskList #efd6f4 {
+    task list
+    --
+    + id (BigAutoField)
+    + task (CharField)
+    ~ insert_by (ForeignKey)
+    + created_at (DateTimeField)
+    + updated_at (DateTimeField)
+    --
+}
+Mid.TaskList -- auth.User
+
+
+class "blacklist.BlacklistedToken <Blacklist>" as blacklist.BlacklistedToken #e7d6f4 {
+    blacklisted token
+    --
+    + id (BigAutoField)
+    + token_id (UUIDField)
+    + token (TextField)
+    ~ user (ForeignKey)
+    + expires_at (DateTimeField)
+    + blacklisted_at (DateTimeField)
+    --
+}
+blacklist.BlacklistedToken -- auth.User
+
+
+class "binary_database_files.File <django-binary-database-files>" as binary_database_files.File #eaf4d6 {
+    file
+    --
+    + id (BigAutoField)
+    + name (CharField)
+    + size (PositiveIntegerField)
+    + content (BinaryField)
+    + created_datetime (DateTimeField)
+    + _content_hash (CharField)
+    --
+}
+
+
+@enduml
