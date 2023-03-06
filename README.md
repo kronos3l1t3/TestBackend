@@ -14,13 +14,13 @@ A REST api written in Django for people with deadlines
     ```
 * Then, Git clone this repo to your PC
     ```bash
-        $ git clone https://github.com/gitgik/django-rest-api.git
+        $ git clone git@github.com:kronos3l1t3/TestBackend.git
     ```
 
 * #### Dependencies
     1. Cd into your the cloned repo as such:
         ```bash
-            $ cd django-rest-api
+            $ cd TestBackend
         ```
     2. Create and fire up your virtual environment:
         ```bash
@@ -42,7 +42,7 @@ A REST api written in Django for people with deadlines
     ```bash
         $ python manage.py runserver
     ```
-    You can now access the file api service on your browser by using
+    You can now access Api Schema on your browser by using
     ```
-        http://localhost:8000/auth/
+        http://localhost:8000/api/schema/swagger-ui/
     ```
