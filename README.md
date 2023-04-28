@@ -46,3 +46,8 @@ A REST api written in Django for people with deadlines
     ```
         http://localhost:8000/api/schema/swagger-ui/
     ```
+* #### Run Test
+    Run all test one simple command:
+    ```bash
+        $ python manage.py test
+    ```
