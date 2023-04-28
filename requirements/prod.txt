@@ -4,6 +4,7 @@
 # ------------------------------------------------------------------------------
 
 beautifulsoup4==4.11.2
+django-model2puml==0.4.1
 psycopg2
 gunicorn
 sentry-sdk
