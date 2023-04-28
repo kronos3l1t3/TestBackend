@@ -48,6 +48,15 @@ class TestTask(TestCase):
         self.assertEqual(TaskList.objects.count(), 2)
         self.assertEqual(response.json()['task'], 'SecondTask')
 
+    def test_fail_create(self):
+        data = {'task': "SecondTask", 'insert_by': 'notNumber'}
+        response = self.client.post(
+            '/tasks/',
+            data=data,
+            **self.header
+        )
+        self.assertEqual(response.status_code, 400)
+
     def test_update(self):
         data = {'task': "SecondTask", 'insert_by': 1}
         response = self.client.put(
@@ -60,6 +69,24 @@ class TestTask(TestCase):
         self.assertEqual(self.my_model.task, 'SecondTask')
         self.assertEqual(self.my_model.insert_by, self.user)
 
+    def test_fail_update(self):
+        data = {'task': "SecondTask", 'insert_by': 'notNumber'}
+        response = self.client.put(
+            f'/tasks/{self.my_model.id}/',
+            data=data,
+            **self.header
+        )
+        self.assertEqual(response.status_code, 400)
+
+    def test_fail_update(self):
+        data = {'task': "SecondTask", 'insert_by': 'notNumber'}
+        response = self.client.put(
+            f'/tasks/999/',
+            data=data,
+            **self.header
+        )
+        self.assertEqual(response.status_code, 404)
+
     def test_delete(self):
         response = self.client.delete(
             f'/tasks/{self.my_model.id}/',
@@ -67,3 +94,10 @@ class TestTask(TestCase):
         )
         self.assertEqual(response.status_code, 204)
         self.assertEqual(TaskList.objects.count(), 0)
+
+    def test_delete_not_found(self):
+        response = self.client.delete(
+            f'/tasks/999/',
+            **self.header
+        )
+        self.assertEqual(response.status_code, 404)
